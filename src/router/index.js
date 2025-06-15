@@ -7,6 +7,7 @@ import NProgress from "nprogress";
 import 'nprogress/nprogress.css'
 import User from "../view/User.vue";
 import HelloView from "../view/HelloView.vue";
+import WriteBlog from "../view/WriteBlog.vue";
 const routes = [
     {
         path: '/',
@@ -44,8 +45,13 @@ const routes = [
         path: '/hello',
         name: 'Hello',
         component: HelloView
+    },
+    {
+        path:'/write-blog',
+        name:'WriteBlog',
+        component:WriteBlog,
+        meta: {requiresAuth: true}
     }
-
 ]
 const router = createRouter({
     history: createWebHistory(),

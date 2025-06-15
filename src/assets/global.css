@@ -2,3 +2,9 @@ html,body{
     padding:0;
     margin:0;
 }
+.tiptap{
+    max-height: 70%;
+}
+.tiptap img{
+    max-width:50%;
+}

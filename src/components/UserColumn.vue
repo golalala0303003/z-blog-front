@@ -17,6 +17,9 @@ function toggleLogin(){
 function goToUserInfo(){
   router.push(`/user/${userId.value}`);
 }
+function handleWriteBlog(){
+  router.push('/write-blog');
+}
 </script>
 
 <template>
@@ -29,6 +32,7 @@ function goToUserInfo(){
     <div class="username">capta1nRui</div>
     <div class="user-tag" @click="goToUserInfo">个人中心</div>
     <div class="login-button" @click="toggleLogin">{{isLogin ? '退出登录' : '点击登录'}}</div>
+    <button @click="handleWriteBlog" class="write-blog-button">写博客！！！</button>
   </div>
 </template>
 
