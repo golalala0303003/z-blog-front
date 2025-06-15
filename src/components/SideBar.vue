@@ -1,33 +1,37 @@
 <script setup>
-import {ref} from 'vue'
+import { ref, defineEmits } from 'vue'
+
+const emit = defineEmits(['typeChange'])
+
 const menuItems = [
-  {name:"推荐",key:"recommend"},
-  {name:"关注",key:"follow"},
-  {name:"点赞",key:"like"},
-  {name:"热门",key:"topBlogs"}
+  { name: "推荐", key: "recommend" },
+  { name: "我的", key: "mine" },
+  { name: "点赞", key: "like" }
 ]
 
 const selectedKey = ref('recommend')
 
-function handleClick(key){
-  console.log("发生了点击侧边栏"+key);
-  selectedKey.value=key;
+function handleClick(key) {
+  console.log("点击了侧边栏:", key)
+  selectedKey.value = key
+  emit('typeChange', key)  // 向父组件发送事件
 }
-
 </script>
 
 <template>
   <div class="side-bar">
-    <div v-for="item in menuItems"
-    :key="item.key"
-    class="side-bar-item"
-         :class="{ active: selectedKey === item.key }"
-    @click="handleClick(item.key)"
+    <div
+        v-for="item in menuItems"
+        :key="item.key"
+        class="side-bar-item"
+        :class="{ active: selectedKey === item.key }"
+        @click="handleClick(item.key)"
     >
-      {{item.name}}
+      {{ item.name }}
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .side-bar{

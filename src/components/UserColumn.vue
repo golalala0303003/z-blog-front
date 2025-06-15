@@ -95,4 +95,12 @@ function handleWriteBlog(){
   background-color: rgba(175, 175, 175, 0.2);
   cursor: pointer;
 }
+.write-blog-button{
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #45b7ff, #c095fa);
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  font-size: 1rem;
+}
 </style>

@@ -3,13 +3,23 @@ import TopBar from "../components/TopBar.vue";
 import SideBar from "../components/SideBar.vue";
 import BlogList from "../components/BlogList.vue";
 import UserColumn from "../components/UserColumn.vue";
+import {ref} from "vue";
+
+const selectedType = ref("recommend")
+
+function updateType(newType) {
+  console.log("主页收到点击类型:", newType)
+  selectedType.value = newType
+}
+
+
 </script>
 
 <template>
   <TopBar class="top-bar" ></TopBar>
   <div class="content-container">
-    <SideBar class="side-bar" ></SideBar>
-    <BlogList class="blog-list"></BlogList>
+    <SideBar class="side-bar"  @typeChange="updateType"></SideBar>
+    <BlogList class="blog-list" :type="selectedType" />
     <UserColumn class="user-column"></UserColumn>
   </div>
 

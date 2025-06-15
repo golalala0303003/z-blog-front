@@ -26,7 +26,6 @@ function handleResize() {
 
 onMounted(async () => {
   console.log("已经接收到id，准备发送请求相关文章" + route.params.id)
-  //TODO请求后端获取文章
   try {
     const response = await axios.get(`http://localhost:8080/blog/${route.params.id}`)
     content.value = response.data.data.content;
@@ -68,7 +67,7 @@ onUnmounted(()=>{
             alt="作者头像"
         />
         <div class="author-text">
-          <div class="author-id">作者 ID：{{ author }}</div>
+          <div class="author-id">作者：{{ author }}</div>
           <div class="create-time">发表于：{{ new Date(createTime).toLocaleString() }}</div>
         </div>
       </div>

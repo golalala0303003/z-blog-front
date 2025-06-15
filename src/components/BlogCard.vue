@@ -1,10 +1,11 @@
 <script setup>
+import {useRouter} from "vue-router";
+import {ref} from "vue";
 
 const props = defineProps({
   blog:Object
 })
 
-import {ref} from "vue";
 const isLiked = ref(false);
 const animate = ref(false);
 function toggleLike(){
@@ -13,7 +14,6 @@ function toggleLike(){
   setTimeout(() => animate.value = false, 300);
 }
 
-import {useRouter} from "vue-router";
 const router = useRouter();
 function handleClickBlogCard(){
   console.log("发生了点击blogCard,准备跳转");
@@ -37,7 +37,7 @@ function handleClickBlogCard(){
       <div class="create-time">{{blog.createTime}}</div>
       <div class="blog-comment">
         <img src="/comment.svg" alt="comment icon" class="icon" />
-        {{blog.comment}}
+        {{blog.commentCount}}
       </div>
       <div class="blog-like" @click.stop="toggleLike">
         <svg
@@ -66,7 +66,7 @@ function handleClickBlogCard(){
               transform="matrix(40,0,0,40,0,-960)"
           />
         </svg>
-        {{blog.like}}
+        {{blog.likeCount}}
       </div>
     </div>
 

@@ -1,15 +1,36 @@
 <script setup>
 import BlogCard from "./BlogCard.vue";
-const blogList = [
-  {id:"2",
-    title:"这是第一个测试标题",
-    cover:"https://zr-sky-take-out.oss-cn-hangzhou.aliyuncs.com/d098beae-9767-4efa-bda6-8dbf92a8e169.jpg",
-    author:"zrr",
-    createTime:"2020-03-01",
-    comment:"10",
-    like:"2"
+import {onMounted, ref, watch} from "vue";
+import axios from "axios";
+
+const props = defineProps({
+  type: String
+})
+const blogList = ref([]);
+
+async function fetchBlogListByType(type) {
+  console.log("BlogList 接收到类型:", type)
+
+  const userId = localStorage.getItem("userId"); // 读取存储的用户ID
+  try {
+    const response = await axios.post('http://localhost:8080/blog/list', {
+      id: userId,
+      type: type
+    });
+    blogList.value = response.data.data;
+    console.log("从后端拉取了这些信息"+blogList.value)
+  } catch (e) {
+    console.error("获取博客列表失败:", e);
   }
-]
+}
+
+onMounted(() => {
+  fetchBlogListByType(props.type)
+})
+
+watch(() => props.type, (newType) => {
+  fetchBlogListByType(newType)
+})
 </script>
 
 <template>
