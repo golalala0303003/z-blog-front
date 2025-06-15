@@ -74,7 +74,6 @@ onUnmounted(()=>{
   z-index: 10;
 }
 .main-container {
-  background-color: yellow;
 
   display: flex;
   flex-direction: row;
@@ -95,7 +94,7 @@ onUnmounted(()=>{
 
 
   max-width: 1000px;
-  background-color: #ff0000;
+  background-color: #ededed;
 
   flex: 1 1 auto;
 }

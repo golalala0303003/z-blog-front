@@ -12,7 +12,7 @@ const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
-function handleRegister() {
+async function handleRegister() {
   if (!username.value || !password.value || !confirmPassword.value) {
     return alert("请填写所有字段");
   }
@@ -20,10 +20,33 @@ function handleRegister() {
     return alert("两次密码输入不一致");
   }
 
-  alert(`注册成功！用户名：${username.value}`);
-  router.push("/login");
+  try {
+    const res = await fetch("http://localhost:8080/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: username.value,
+        password: password.value,
+      }),
+    });
+
+    const result = await res.json();
+
+    if (res.ok && result.code === 200) {
+      alert("注册成功！");
+      router.push("/login");
+    } else {
+      alert(result.msg || "注册失败");
+    }
+  } catch (error) {
+    console.error("注册请求出错", error);
+    alert("注册请求失败，请检查网络或稍后再试");
+  }
 }
 </script>
+
 
 <template>
   <div class="page-container">

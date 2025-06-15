@@ -11,7 +11,7 @@ const message = ref('')
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8080/user/hello')
+    const response = await fetch('http://localhost:8080/testhello/hello')
     const result = await response.json()
     if (result.code === 200 && result.data) {
       message.value = result.data.message

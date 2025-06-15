@@ -31,12 +31,14 @@ const routes = [
     {
         path:'/blog/:id',
         name:'Blog',
-        component: Blog
+        component: Blog,
+        meta: {requiresAuth: true}
     },
     {
         path:'/user/:id',
         name:'User',
-        component:User
+        component:User,
+        meta: {requiresAuth: true}
     },
     {
         path: '/hello',
@@ -53,11 +55,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     NProgress.start();
     const token = localStorage.getItem('token');
-    /*if(to.meta.requiresAuth && !token){
+    if(to.meta.requiresAuth && !token){
         alert('没有登录,请先登录');
         console.log('未检测到令牌，跳转登录');
         return next('/login');
-    }*/
+    }
     console.log('切换页面');
     next();
 })
