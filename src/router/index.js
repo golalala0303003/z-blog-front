@@ -6,6 +6,7 @@ import Blog from "../view/Blog.vue";
 import NProgress from "nprogress";
 import 'nprogress/nprogress.css'
 import User from "../view/User.vue";
+import HelloView from "../view/HelloView.vue";
 const routes = [
     {
         path: '/',
@@ -36,6 +37,11 @@ const routes = [
         path:'/user/:id',
         name:'User',
         component:User
+    },
+    {
+        path: '/hello',
+        name: 'Hello',
+        component: HelloView
     }
 
 ]
