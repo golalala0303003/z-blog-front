@@ -25,11 +25,11 @@ function handleClickBlogCard(){
   <div class="blog-card" @click="handleClickBlogCard">
     <div class="blog-info">
       <div class="blog-title">{{blog.title}}</div>
-      <div class="blog-writer">{{blog.writer}}</div>
+      <div class="blog-writer">{{blog.author}}</div>
     </div>
 
     <div class="text-info">
-      <img v-bind:src="blog.img" alt="pic not found" class="blog-img">
+      <img v-bind:src="blog.cover" alt="pic not found" class="blog-img">
       <div class="blog-abstract">{{blog.abstract}}</div>
     </div>
 
