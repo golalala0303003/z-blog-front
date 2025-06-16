@@ -27,8 +27,9 @@ async function handleLogin() {
       alert("登录成功！");
       console.log(res.data.data);
       localStorage.setItem("token", res.data.data.token);
-      localStorage.setItem("userId",res.data.data.id)
-      // localStorage.setItem('userId', res.data.data.id);
+      localStorage.setItem("userId",res.data.data.id);
+      localStorage.setItem("username",res.data.data.username);
+      localStorage.setItem("avatar".res.data.data.avatar);
       router.push("/home");
     } else {
       alert("登录失败：" + res.data.msg);

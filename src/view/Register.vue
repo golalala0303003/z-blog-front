@@ -19,7 +19,7 @@ async function handleRegister() {
   if (password.value !== confirmPassword.value) {
     return alert("两次密码输入不一致");
   }
-
+  console.log("这个是名字"+username.value)
   try {
     const res = await fetch("http://localhost:8080/user/register", {
       method: "POST",
@@ -27,7 +27,7 @@ async function handleRegister() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userName: username.value,
+        username: username.value,
         password: password.value,
       }),
     });
