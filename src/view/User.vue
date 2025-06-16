@@ -2,10 +2,8 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BlogTopBar from "../components/BlogTopBar.vue";
-
 import BlogListForUser from "../components/BlogListForUser.vue";
 import axios from "axios";
-
 
 const route = useRoute();
 const router = useRouter();
@@ -15,20 +13,22 @@ const username = ref("");
 const avatar = ref("");
 
 const isThisPageYours = ref(false);
-// 模拟获取用户信息
+
 onMounted(async () => {
-  console.log("用户的id为 " + userId);
   try {
-    const response = await axios.get(`http://localhost:8080/user/view/${userId}`)
+    const response = await axios.get(`http://localhost:8080/user/view/${userId}`);
+    console.log(response.data);
     username.value = response.data.data.username;
     avatar.value = response.data.data.avatar;
-    console.log("后端返回id", response.data.data.id, typeof response.data.data.id);
-    console.log("本地存储id", localStorage.getItem("userId"), typeof localStorage.getItem("userId"));
 
-    isThisPageYours.value = Number(localStorage.getItem("userId")) === response.data.data.id;
-    console.log(isThisPageYours.value);
+    const storedUserId = localStorage.getItem("userId");
+    if (Number(storedUserId) === response.data.data.id) {
+      isThisPageYours.value = true;
+    } else {
+      isThisPageYours.value = false;
+    }
   } catch (e) {
-    console.error("获取博客列表失败:", e);
+    console.error("获取用户信息失败:", e);
   }
 });
 
@@ -50,7 +50,10 @@ function goEditUser() {
       </div>
 
       <div class="blog-list-wrapper">
-        <BlogListForUser :user-id="userId" />
+        <h3 class="blog-history-title">历史博客</h3>
+        <div class="blog-scroll-wrapper">
+          <BlogListForUser :user-id="userId" />
+        </div>
       </div>
     </div>
   </div>
@@ -60,59 +63,88 @@ function goEditUser() {
 .main-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f0f2f5;
 }
 
 .content-container {
-  flex: 1;
-  padding: 1.5rem;
-  overflow-y: auto;
+  width: 80%;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
+
 
 .user-info-card {
   display: flex;
   align-items: center;
-  background: #ffffff;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
+  margin-right: 1.5rem;
   object-fit: cover;
-  margin-right: 1rem;
-  border: 3px solid #6369ff;
 }
 
 .info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .username {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  margin: 0;
 }
 
 .edit-button {
-  padding: 0.5rem 1rem;
-  background-color: #6369ff;
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  background-color: #409eff;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background-color 0.3s;
 }
 
 .edit-button:hover {
-  background-color: #4b52cc;
+  background-color: #337ecc;
 }
 
+
 .blog-list-wrapper {
-  max-height: 70vh;
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.blog-history-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+  border-left: 4px solid #409eff;
+  padding-left: 0.6rem;
+}
+
+.blog-scroll-wrapper {
+  max-height: 60vh;
   overflow-y: auto;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.blog-scroll-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 </style>

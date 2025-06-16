@@ -48,6 +48,6 @@ function updateType(newType) {
   margin-top:2vh;
   margin-right:3vh;
   width:15vw;
-  height:40vh;
+  height:45vh;
 }
 </style>
