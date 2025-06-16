@@ -18,7 +18,7 @@ const editor = useEditor({
   extensions: [StarterKit,Image],
   content: props.content || '<p>写点什么吧</p>',
   onUpdate({ editor }) {
-    emit('update:content', editor.getHTML()) // 内容变动时通知父组件
+    emit('update:content', editor.getHTML())
   },
 })
 

@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css'
 import User from "../view/User.vue";
 import HelloView from "../view/HelloView.vue";
 import WriteBlog from "../view/WriteBlog.vue";
+import EditUser from "../view/EditUser.vue";
 const routes = [
     {
         path: '/',
@@ -50,6 +51,12 @@ const routes = [
         path:'/write-blog',
         name:'WriteBlog',
         component:WriteBlog,
+        meta: {requiresAuth: true}
+    },
+    {
+        path: '/user/:id/edit',
+        name: 'EditUser',
+        component: EditUser,
         meta: {requiresAuth: true}
     }
 ]

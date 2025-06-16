@@ -28,7 +28,7 @@ onMounted(() => {
   fetchBlogListByType(props.type)
 })
 
-watch(() => props.type, (newType) => {
+  watch(() => props.type, (newType) => {
   fetchBlogListByType(newType)
 })
 </script>
