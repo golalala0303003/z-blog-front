@@ -5,6 +5,7 @@ import {useRoute} from "vue-router";
 import BlogTopBar from "../components/BlogTopBar.vue";
 import UserColumn from "../components/UserColumn.vue";
 import axios from "axios";
+import CommentArea from "../components/CommentArea.vue";
 
 const content = ref("")
 const cover = ref("")
@@ -74,7 +75,7 @@ onUnmounted(()=>{
 
       <BlogRichText :content="content" />
 
-      <div class="comment">这是评论区</div>
+      <CommentArea class="comment" :blog-id="route.params.id">这是评论区</CommentArea>
     </div>
 
     <UserColumn v-if="showUserColumn" class="user-column" />
