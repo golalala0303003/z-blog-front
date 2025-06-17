@@ -10,6 +10,7 @@ function toggleLogin(){
   if(isLogin.value){
     console.log(isLogin.value+"退出登录动作");
     isLogin.value = !isLogin.value;
+    router.push("/login");
   }else {
     console.log("跳转登录界面")
     router.push("/login");
