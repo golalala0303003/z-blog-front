@@ -5,8 +5,7 @@ const emit = defineEmits(['typeChange'])
 
 const menuItems = [
   { name: "推荐", key: "recommend" },
-  { name: "我的", key: "mine" },
-  { name: "点赞", key: "like" }
+  { name: "我的", key: "mine" }
 ]
 
 const selectedKey = ref('recommend')

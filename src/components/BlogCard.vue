@@ -1,6 +1,7 @@
 <script setup>
 import {useRouter} from "vue-router";
 import {ref} from "vue";
+import axios from "axios";
 
 const props = defineProps({
   blog:Object
@@ -8,10 +9,24 @@ const props = defineProps({
 
 const isLiked = ref(false);
 const animate = ref(false);
-function toggleLike(){
+async function toggleLike() {
   isLiked.value = !isLiked.value;
   animate.value = true;
   setTimeout(() => animate.value = false, 300);
+
+  try {
+    await axios.post("http://localhost:8080/blog/like", {
+      blogId: props.blog.id,
+      like: isLiked.value
+    });
+    if (isLiked.value) {
+      props.blog.likeCount += 1;
+    } else {
+      props.blog.likeCount -= 1;
+    }
+  } catch (error) {
+    console.error("点赞请求失败", error);
+  }
 }
 
 const router = useRouter();
