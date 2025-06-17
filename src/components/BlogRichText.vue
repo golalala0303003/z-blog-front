@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div v-html="content"></div>
+  <div class="BlogRichTextContent" v-html="content"></div>
 </template>
 
 <style scoped>
