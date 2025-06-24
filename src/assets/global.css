@@ -8,6 +8,6 @@ html,body{
 .tiptap img{
     max-width:50%;
 }
-.v_html img{
-    max-width:100%;
+.BlogRichTextContent img{
+    max-width: 100%;
 }
