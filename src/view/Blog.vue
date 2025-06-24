@@ -32,7 +32,7 @@ const handleDelete = async () => {
   try {
     await axios.delete(`http://localhost:8080/blog/delete/${route.params.id}`);
     alert("删除成功！");
-    router.back()
+    router.push("/")
   } catch (error) {
     console.error("删除失败", error);
     alert("删除失败！");
