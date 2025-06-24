@@ -1,34 +1,52 @@
 <script setup>
 import BlogRichText from "../components/BlogRichText.vue";
-import {onMounted, onUnmounted, ref} from "vue";
-import {useRoute} from "vue-router";
+import { onMounted, onUnmounted, ref } from "vue";
+import {useRoute, useRouter} from "vue-router";
 import BlogTopBar from "../components/BlogTopBar.vue";
 import UserColumn from "../components/UserColumn.vue";
 import axios from "axios";
 import CommentArea from "../components/CommentArea.vue";
 
-const content = ref("")
-const cover = ref("")
-const title = ref("")
-const author = ref("")
-const avatar = ref("")
-const createTime = ref("")
+const content = ref("");
+const cover = ref("");
+const title = ref("");
+const author = ref("");
+const avatar = ref("");
+const createTime = ref("");
 
 const route = useRoute();
+const router = useRouter();
 const showFunctionColumn = ref(true);
 const showUserColumn = ref(true);
+const currentUser = localStorage.getItem("username");
 
 function handleResize() {
   const width = window.innerWidth;
   showFunctionColumn.value = width > 992;
   showUserColumn.value = width > 992;
-  console.log("handleResize"+"侦测到了浏览器窗口变化"+width);
+  console.log("handleResize 侦测到了浏览器窗口变化 " + width);
 }
 
-onMounted(async () => {
-  console.log("已经接收到id，准备发送请求相关文章" + route.params.id)
+const handleDelete = async () => {
+  if (!confirm("确定要删除这篇博客吗？")) return;
   try {
-    const response = await axios.get(`http://localhost:8080/blog/${route.params.id}`)
+    await axios.delete(`http://localhost:8080/blog/delete/${route.params.id}`);
+    alert("删除成功！");
+    router.back()
+  } catch (error) {
+    console.error("删除失败", error);
+    alert("删除失败！");
+  }
+};
+
+const handleEdit = () => {
+  router.push(`/edit-blog/${route.params.id}`);
+};
+
+onMounted(async () => {
+  console.log("已经接收到id，准备发送请求相关文章 " + route.params.id);
+  try {
+    const response = await axios.get(`http://localhost:8080/blog/${route.params.id}`);
     content.value = response.data.data.content;
     title.value = response.data.data.title;
     cover.value = response.data.data.cover;
@@ -36,18 +54,18 @@ onMounted(async () => {
     avatar.value = response.data.data.avatar;
     createTime.value = response.data.data.createTime;
 
-    console.log('博客详情获取成功')
+    console.log("博客详情获取成功");
   } catch (error) {
-    console.error('获取博客失败', error)
-    alert('无法加载博客内容')
+    console.error("获取博客失败", error);
+    alert("无法加载博客内容");
   }
   handleResize();
   window.addEventListener("resize", handleResize);
-})
+});
 
-onUnmounted(()=>{
+onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
-})
+});
 </script>
 
 <template>
@@ -61,12 +79,13 @@ onUnmounted(()=>{
 
       <h1 class="title">{{ title }}</h1>
 
+      <div v-if="author === currentUser" class="action-buttons">
+        <button class="edit-button" @click="handleEdit">编辑</button>
+        <button class="delete-button" @click="handleDelete">删除</button>
+      </div>
+
       <div class="author-info">
-        <img
-            class="author-avatar"
-            :src="avatar"
-            alt="作者头像"
-        />
+        <img class="author-avatar" :src="avatar" alt="作者头像" />
         <div class="author-text">
           <div class="author-id">作者：{{ author }}</div>
           <div class="create-time">发表于：{{ new Date(createTime).toLocaleString() }}</div>
@@ -81,7 +100,6 @@ onUnmounted(()=>{
     <UserColumn v-if="showUserColumn" class="user-column" />
   </div>
 </template>
-
 
 <style scoped>
 .top-bar {
@@ -143,6 +161,42 @@ onUnmounted(()=>{
   color: #2c3e50;
 }
 
+/* 按钮区域 */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.edit-button,
+.delete-button {
+  margin: 0 8px;
+  padding: 6px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #e53935;
+}
+
 /* 评论区 */
 .comment {
   margin-top: 40px;
@@ -187,6 +241,7 @@ onUnmounted(()=>{
     box-shadow: none;
   }
 }
+
 .author-info {
   display: flex;
   align-items: center;

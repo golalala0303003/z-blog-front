@@ -9,6 +9,7 @@ import User from "../view/User.vue";
 import HelloView from "../view/HelloView.vue";
 import WriteBlog from "../view/WriteBlog.vue";
 import EditUser from "../view/EditUser.vue";
+import EditBlog from "../view/EditBlog.vue";
 const routes = [
     {
         path: '/',
@@ -57,6 +58,12 @@ const routes = [
         path: '/user/:id/edit',
         name: 'EditUser',
         component: EditUser,
+        meta: {requiresAuth: true}
+    },
+    {
+        path: '/edit-blog/:id',
+        name: 'EditBlog',
+        component: EditBlog,
         meta: {requiresAuth: true}
     }
 ]
